@@ -17,10 +17,28 @@ const Todo = ({text, todo, todos, setTodos}) => {
         }))        
     }
 
+    function getIcon(priority) {
+        var iconName = ""
+        switch(priority) {
+            case "urgent":
+                iconName = "fa-exclamation"
+                break
+            case "normal":
+                break
+            case "not-urgent":
+                iconName = "fa-thumbs-up"
+                break
+        }
+        return iconName
+    }
+
     return (
         <div className="todo">
             {/* Below line add multiple classes, dependant on if todo.completed is true */}
             <li className={`todo-item ${todo.completed ? "completed" : ''}`}>{text}</li>
+            <button className={`${todo.priority}-btn`}>
+                <i className={`fas ${getIcon(todo.priority)}`}></i>
+            </button>
             <button onClick={completeHandler} className="complete-btn">
                 <i className="fas fa-check"></i>
             </button>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({inputText, setInputText, todos, setTodos, setStatus}) => {
+const Form = ({inputText, setInputText, todos, setTodos, priority, setPriority}) => {
     // 
     const inputTextHandler = (e) => {
         setInputText(e.target.value)
@@ -13,15 +13,16 @@ const Form = ({inputText, setInputText, todos, setTodos, setStatus}) => {
             {
                 text: inputText,
                 completed: false,
-                id: Math.random() * 1000
+                id: Math.random() * 1000,
+                priority: priority
             }
 
         ])
         setInputText("")
     }
 
-    const statusHandler = (e) => {
-        setStatus(e.target.value)
+    const priorityHandler = (e) => {
+        setPriority(e.target.value)
     }
 
     return (
@@ -32,16 +33,18 @@ const Form = ({inputText, setInputText, todos, setTodos, setStatus}) => {
                 type="text"
                 className="todo-input" 
             />
-                <button onClick={submitTodoHandler} className="todo-button" type="submit">
-                    <i className="fas fa-plus-square" />
-                </button>
-            <div onClick={statusHandler} className="select">
-                <select name="todos" className="filter-todo">
-                    <option value="all">All</option>
-                    <option value="completed">Completed</option>
-                    <option value="uncompleted">Uncompleted</option>
+
+            <button onClick={submitTodoHandler} className="todo-button" type="submit">
+                <i className="fas fa-plus-square" />
+            </button>
+            <div onClick={priorityHandler} className="select-priority">
+                <select className="todo-priority" defaultValue="normal">
+                    <option value="urgent">Urgent</option>
+                    <option value="normal">Normal</option>
+                    <option value="not-urgent">Not Urgent</option>
                 </select>
             </div>
+
         </form>
     )
 }

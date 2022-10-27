@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import Form from "./components/Form"
 import TodoList from './components/TodoList'
+import Filter from './components/Filter';
 
 function App() {
   // State
@@ -9,6 +10,9 @@ function App() {
   const [todos, setTodos] = useState([])
   const [status, setStatus] = useState("all")
   const [filteredTodos, setFilteredTodos] = useState([])
+  const [priority, setPriority] = useState("normal")
+  const [priorityFilter, setPriorityFilter] = useState("all")
+  
   
   // Run once when app starts
   useEffect(() => {
@@ -20,21 +24,33 @@ function App() {
   useEffect(() => {
     filterHandler()
     saveLocalTodos()
-  }, [todos, status])
+  }, [todos, status, priorityFilter])
+
 
   // Functions
   const filterHandler = () => {
-    switch(status) {
+    var filteredByStatus = []
+    var filteredByPriority = []
+    switch (status) {
       case "completed":
-        setFilteredTodos(todos.filter(item => item.completed === true))
+        filteredByStatus = todos.filter(item => item.completed === true)
         break
       case "uncompleted":
-        setFilteredTodos(todos.filter(item => item.completed !== true))
+        filteredByStatus = todos.filter(item => item.completed !== true)
         break
       case "all":
-        setFilteredTodos(todos)
+        filteredByStatus = todos
         break
     }
+    switch (priorityFilter) {
+      case "all":
+        filteredByPriority = filteredByStatus.slice()
+        break
+      default:
+        filteredByPriority = filteredByStatus.filter(item => item.priority === priorityFilter)
+        break
+    }
+    setFilteredTodos(filteredByPriority)
   }
 
   const saveLocalTodos = () => {
@@ -58,8 +74,14 @@ function App() {
         setTodos={setTodos}
         inputText={inputText}
         setInputText={setInputText}
-        setStatus={setStatus}
+        priority={priority}
+        setPriority={setPriority}
       />
+      <Filter
+        setStatus={setStatus}
+        setPriorityFilter={setPriorityFilter}
+      />
+
       <TodoList
         todos={todos}
         setTodos={setTodos}
