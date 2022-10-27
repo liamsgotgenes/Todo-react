@@ -1,7 +1,7 @@
 {
   "name": "react-todo-beefy-edition",
   "version": "0.1.0",
-  "homepage": "https://liamsgotgenes.github.io/react",
+  "homepage": "https://liamsgotgenes.github.io/todo-react",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
